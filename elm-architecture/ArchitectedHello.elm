@@ -10,9 +10,6 @@ main =
     Html.beginnerProgram { model = model, view = view, update = update }
 
 
-
-
-
 type alias Model =
     { text : String
     , size : Int
@@ -40,13 +37,10 @@ update msg model =
     case msg of
         Text str ->
             { model | text = model.text ++ str }
-
         SizeUp ->
             { model | size = model.size + 1 }
-
         SizeDown ->
             { model | size = model.size - 1 }
-
         Input str ->
             { model | inputText = str }
 
