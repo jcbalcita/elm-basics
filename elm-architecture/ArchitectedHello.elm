@@ -13,7 +13,6 @@ main =
 type alias Model =
     { text : String
     , size : Int
-    , inputText : String
     }
 
 
@@ -21,7 +20,6 @@ model : Model
 model =
     { text = "Hello world"
     , size = 1
-    , inputText = ""
     }
 
 
@@ -39,13 +37,13 @@ update msg model =
         AddText str ->
             { model | text = model.text ++ str }
         RemoveText ->
-            { model | text = String.dropRight 1 model.text }
+            { model | text = "" }
         SizeUp ->
             { model | size = model.size + 1 }
         SizeDown ->
               { model | size  = if model.size > 1 then model.size - 1 else 1 }
         Input str ->
-            { model | inputText = str }
+            { model | text = str }
 
 
 myStyle : Int -> Attribute msg
@@ -60,9 +58,8 @@ view : Model -> Html Msg
 view model =
     div []
         [ div [ myStyle model.size ] [ text model.text ]
-        , input [ onInput Input ] []
-        , button [ onClick (AddText model.inputText) ] [ text "Add text" ]
-        , button [ onClick (RemoveText) ] [ text "Remove last character" ]
+        , input [ onInput Input, value model.text ] []
+        , button [ onClick (RemoveText) ] [ text "Remove text" ]
         , button [ onClick SizeUp ] [ text "+" ]
         , button [ onClick SizeDown ] [ text "-" ]
         ]
