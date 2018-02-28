@@ -26,7 +26,8 @@ model =
 
 
 type Msg
-    = Text String
+    = AddText String
+    | RemoveText
     | SizeUp
     | SizeDown
     | Input String
@@ -35,12 +36,14 @@ type Msg
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Text str ->
+        AddText str ->
             { model | text = model.text ++ str }
+        RemoveText ->
+            { model | text = String.dropRight 1 model.text }
         SizeUp ->
             { model | size = model.size + 1 }
         SizeDown ->
-            { model | size = model.size - 1 }
+              { model | size  = if model.size > 1 then model.size - 1 else 1 }
         Input str ->
             { model | inputText = str }
 
@@ -58,7 +61,8 @@ view model =
     div []
         [ div [ myStyle model.size ] [ text model.text ]
         , input [ onInput Input ] []
-        , button [ onClick (Text model.inputText) ] [ text "Add text to model" ]
+        , button [ onClick (AddText model.inputText) ] [ text "Add text" ]
+        , button [ onClick (RemoveText) ] [ text "Remove last character" ]
         , button [ onClick SizeUp ] [ text "+" ]
         , button [ onClick SizeDown ] [ text "-" ]
         ]
