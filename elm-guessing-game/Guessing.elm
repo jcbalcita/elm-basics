@@ -50,6 +50,7 @@ checkIfCorrect : Model -> Bool
 checkIfCorrect model =
     model.guess == model.word
 
+
 clueOrReveal : Model -> String
 clueOrReveal model =
     if model.isCorrect then

@@ -13,6 +13,9 @@ type Direction
     = TextToEmoji
     | EmojiToText
 
+type Cat
+    = Dagwood
+    | Sully
 
 init : Model
 init =
@@ -31,9 +34,9 @@ translateText key { currentText, translateDirection } =
             textToEmoji key currentText
 
 
-switchTranslateMode : Model -> String
-switchTranslateMode { translateDirection } =
-    case translateDirection of
+switchTranslateMode : Model -> Cat -> String
+switchTranslateMode model cat =
+    case model.translateDirection of
         EmojiToText ->
             "textToEmoji"
 
